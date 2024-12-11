@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { Open_Sans } from "next/font/google";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
