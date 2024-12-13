@@ -8,7 +8,7 @@ const opensans = Open_Sans({
 
 const Hero = () => {
   return (
-    <section className="flex flex-col bg-gradient-to-br  from-gray-900 to-transparent gap-6 items-center justify-center sm:px-6 px-3 py-10 ">
+    <section className="flex flex-col  gap-6 items-center justify-center sm:px-6 px-3 py-10 ">
       <h1 className="bg-gradient-to-b from-neutral-50 to-neutral-500 animate-in fade-in duration-700 bg-clip-text text-transparent text-6xl text-center font-semibold">
         Manage your projects with ease
       </h1>

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { Github } from "lucide-react";
 import { Open_Sans } from "next/font/google";
+import { FaGithub } from "react-icons/fa";
 
 const opensans = Open_Sans({
   weight: "300",
@@ -33,21 +33,22 @@ const Footer = () => {
           Contact Us
         </a>
       </div>
-      <p className="text-sm text-gray-500 mt-4 flex flex-row justify-center gap-4">
-        Developed and Managed by{" "}
 
-        <div className="flex flex-row gap-1">
-          <Github />
-        <a
-          href="https://github.com/risicoding"
-          className="text-blue-500 hover:text-white"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          risicoding
-        </a>
+      <div className="text-sm text-gray-500 py-4 flex flex-row justify-center gap-3">
+        <p>Developed and Managed by </p>
+
+        <div className="flex flex-row gap-2 items-center">
+          <FaGithub className="text-gray-500" />
+          <a
+            href="https://github.com/risicoding"
+            className="text-blue-500 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            risicoding
+          </a>
         </div>
-      </p>
+      </div>
     </footer>
   );
 };

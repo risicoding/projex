@@ -5,23 +5,38 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="w-full px-6 py-4 border-b shadow-neutral-700 shadow-md border-neutral-500 flex flex-row justify-between">
-      <div className="flex flex-row gap-3 items-center">
-        <Image className="select-none" src="/logo.svg" width={40} height={40} alt="logo" />
-        <h2 className="text-xl">Projex</h2>
-      </div>
-      <div className="hidden sm:flex flex-row gap-3 items-center">
-        <NavbarItem name="Home" href="/" />
-        <NavbarItem name="Features" href="/" />
-        <NavbarItem name="Dashboard" href="/" />
-      </div>
+    <div className="px-4 py-4">
+      <nav className="w-full px-6 py-3 bg-black border border-1px border-gray-700 shadow-md shadow-gray-700 rounded-full  flex flex-row justify-between">
+        <div className="flex flex-row gap-3 items-center">
+          <Image
+            className="select-none"
+            src="/logo.svg"
+            width={40}
+            height={40}
+            alt="logo"
+          />
+          <h2 className="text-xl">Projex</h2>
+        </div>
+        <div className="hidden sm:flex flex-row gap-3 items-center">
+          <NavbarItem name="Home" href="/" />
+          <NavbarItem name="Features" href="/" />
+          <NavbarItem name="Dashboard" href="/" />
+        </div>
 
-      <button className="px-8 py-2 rounded-full relative text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
-        <div className="absolute inset-x-0 h-px w-1/2 mx-auto -bottom-px left-4 shadow-2xl  bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-        <div className="absolute inset-x-0 h-px w-1/2 mx-auto -top-px right-4 shadow-2xl  bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-        <span className="relative z-20">Sign Up</span>
+        <div className="flex flex-row gap-4">
+      <button className="relative inline-flex h-10 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-6 py-1 text-md font-medium text-white backdrop-blur-3xl">
+              Signup
+        </span>
       </button>
-    </nav>
+
+          <button className="px-6 py-2 rounded-full relative text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
+            <span className="relative z-20">Login</span>
+          </button>
+        </div>
+      </nav>
+    </div>
   );
 };
 
@@ -33,7 +48,14 @@ type NavbarItemProps = {
 const NavbarItem = ({ name, href, className }: NavbarItemProps) => {
   return (
     <Link href={href}>
-      <div className={cn("text-neutral-300 hover:text-200 cursor-pointer", className)}>{name}</div>
+      <div
+        className={cn(
+          "text-neutral-300 hover:text-200 cursor-pointer",
+          className,
+        )}
+      >
+        {name}
+      </div>
     </Link>
   );
 };
