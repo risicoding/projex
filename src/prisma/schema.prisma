@@ -1,6 +1,19 @@
 model Projects {
-  id   String @id @default(uuid())
-  name String
+  id          String   @id @default(uuid())
+  name        String
+  userId      String
+  workspaceId String
+  board       Board[]
+  createdAt   DateTime @default(now())
+
+  @@index([id, userId, workspaceId])
+}
+
+model Board {
+  id         String    @id @default(uuid())
+  name       String
+  Projects   Projects? @relation(fields: [projectsId], references: [id])
+  projectsId String?
 }
 
 generator client {
