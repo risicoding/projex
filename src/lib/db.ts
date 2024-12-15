@@ -1,12 +1,19 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
+// Declare global type to ensure compatibility
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
+// Create a Prisma client instance with Accelerate extension
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
     log: ['query'], // Optional: Log queries for debugging
-  });
+  })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// Ensure Prisma client instance is reused in non-production environments
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}
 
