@@ -80,7 +80,7 @@ const Sidebar = () => {
       </div>
 
       {/* Projects Section with Custom ProjectLink */}
-      <div className="flex flex-col px-3 gap-3 mt-2">
+      <div className="flex flex-col px-3 gap-3 mt-3">
         <ProjectLink href="/projects/1">Project 1</ProjectLink>
         <ProjectLink href="/projects/2">Project 2</ProjectLink>
       </div>

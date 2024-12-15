@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "./_components/Navbar";
-import Hero from "./_sections/Hero";
 import Image from "next/image";
-import Features from "./_sections/Features";
-import CtaButton from "./_sections/Cta";
-import ContactUs from "./_sections/ContactUs";
-import Footer from "./_sections/Footer";
+import Navbar from "@/features/marketing/components/MarketingNavbar";
+import Hero from "@/features/marketing/sections/Hero";
+import Features from "@/features/marketing/sections/Features";
+import CtaSection from "@/features/marketing/sections/Cta";
+import Footer from "@/features/marketing/sections/Footer";
+import ContactUs from "@/features/marketing/sections/ContactUs";
 
 const page = () => {
   return (
@@ -23,7 +23,7 @@ const page = () => {
       />
 
       <Features />
-      <CtaButton />
+      <CtaSection />
       <ContactUs />
       <Footer />
     </div>
