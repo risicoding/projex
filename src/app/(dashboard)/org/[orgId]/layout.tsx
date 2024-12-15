@@ -1,6 +1,6 @@
 import React from "react";
 import OrgSwitcher from "./_components/OrgSwitcher";
-import { SignedIn } from "@clerk/nextjs";
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import Sidebar from "./_components/Sidebar";
 import MobileSidebar from "./_components/MobileSidebar";
 import Navbar from "./_components/Navbar";
@@ -28,6 +28,7 @@ const OrgLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </OrgSwitcher>
       </SignedIn>
+      <SignedOut><RedirectToSignIn/></SignedOut>
     </>
   );
 };
