@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { project, boardColumn } from "./schema"; // Import your tables
 
-const db=drizzle("postgresql://neondb_owner:GvdoZO7W4hQi@ep-divine-scene-a5y0uyij-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require")
+const db=drizzle('url')
 
 async function seed() {
   console.log("Starting seed...");

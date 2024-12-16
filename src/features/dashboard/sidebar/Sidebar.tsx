@@ -2,6 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Home, Users, Settings, ArrowRight, PlusCircle } from "lucide-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+} from "@/components/ui/dialog";
+import AddProjectForm from "../projects/components/AddProjectForm";
 
 // Custom Link Component for Projects
 const ProjectLink = ({
@@ -76,7 +85,19 @@ const Sidebar = () => {
         <h3 className="text-sm uppercase tracking-wide text-gray-500">
           Projects
         </h3>
-        <PlusCircle className="size-5 cursor-pointer" />
+
+        <Dialog>
+          <DialogTitle className="hidden">Add project</DialogTitle>
+          <DialogTrigger>
+            <PlusCircle className="size-5 cursor-pointer" />
+          </DialogTrigger>
+          <DialogContent className="w-3/4">
+            <DialogHeader>Add a new project</DialogHeader>
+          <DialogDescription className="hidden">new project dialog</DialogDescription>
+            <AddProjectForm />
+          </DialogContent>
+        </Dialog>
+
       </div>
 
       {/* Projects Section with Custom ProjectLink */}

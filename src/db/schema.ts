@@ -13,7 +13,7 @@ export const project = pgTable("user", {
   orgId: varchar().notNull(),
   creatorId: varchar().notNull(),
   createdAt: timestamp().defaultNow(),
-  name: text(),
+  name: text().notNull(),
 });
 
 export const projectRelations = relations(project, ({ many }) => ({
@@ -23,7 +23,7 @@ export const projectRelations = relations(project, ({ many }) => ({
 export const boardColumn = pgTable("boardColumn", {
   id: serial("id").primaryKey(),
   name: text(),
-  projectId: integer(),
+  projectId: integer().references(()=>project.id)
 });
 
 export const boardColumnRelations = relations(boardColumn, ({ one }) => ({
