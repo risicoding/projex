@@ -16,8 +16,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AddProjectAction } from "../actions/AddProjectAction";
 import { DialogClose } from "@/components/ui/dialog";
+import { useProjectStore } from "../store/projectStore";
 
 const AddProjectForm = () => {
+  const addProjects =useProjectStore((state)=>state.addProjects)
+
   const form = useForm<z.infer<typeof ProjectFormSchema>>({
     resolver: zodResolver(ProjectFormSchema),
     defaultValues: {
@@ -26,6 +29,7 @@ const AddProjectForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof ProjectFormSchema>) => {
+    addProjects({...values,})
     const res = await AddProjectAction(values);
     console.log(res);
   };
@@ -49,7 +53,7 @@ const AddProjectForm = () => {
             </FormItem>
           )}
         />
-        <DialogClose className="w-full">
+        <DialogClose className="w-full" asChild>
           <Button type="submit" className="w-full">
             Submit
           </Button>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Home, Users, Settings, ArrowRight, PlusCircle } from "lucide-react";
+import { Home, Users, Settings,  PlusCircle } from "lucide-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import {
   Dialog,
@@ -11,29 +11,13 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import AddProjectForm from "../projects/components/AddProjectForm";
+import ProjectsListContainer from "../projects/components/ProjectsListContainer";
 
 // Custom Link Component for Projects
-const ProjectLink = ({
-  children,
-  href,
-}: {
-  children: React.ReactNode;
-  href: string;
-}) => {
-  return (
-    <Link
-      href={href}
-      className="inline-flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium border border-gray-600 text-gray-300 rounded-md hover:bg-gray-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-    >
-      {children}
-      <ArrowRight className="w-4 h-4 text-gray-600" />
-    </Link>
-  );
-};
 
 const Sidebar = () => {
   return (
-    <aside className="w-full h-full bg-gray-900 text-gray-300">
+    <aside className="w-full h-full bg-gray-900 text-gray-300 overflow-y-auto">
       {/* Logo Section */}
       <div className="flex flex-row gap-3 p-3 items-center border-b border-gray-700">
         <Image
@@ -101,10 +85,7 @@ const Sidebar = () => {
       </div>
 
       {/* Projects Section with Custom ProjectLink */}
-      <div className="flex flex-col px-3 gap-3 mt-3">
-        <ProjectLink href="/projects/1">Project 1</ProjectLink>
-        <ProjectLink href="/projects/2">Project 2</ProjectLink>
-      </div>
+      <ProjectsListContainer/>
     </aside>
   );
 };

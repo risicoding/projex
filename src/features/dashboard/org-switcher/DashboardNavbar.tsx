@@ -7,7 +7,7 @@ const Navbar = () => {
         <Bell className="size-5 text-gray-300"/>
         <UserIcon className="size-5 text-gray-300"/>
       </div>
-      <OrganizationSwitcher />
+      <OrganizationSwitcher afterSelectOrganizationUrl='/org/:orgId' afterCreateOrganizationUrl='/org/orgId' />
       <UserButton />
     </div>
   );

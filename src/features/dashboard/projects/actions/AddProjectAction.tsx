@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@/db/drizzle";
 import { project } from "@/db/schema";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const AddProjectAction = async (
   values: z.infer<typeof ProjectFormSchema>,
@@ -23,6 +24,7 @@ export const AddProjectAction = async (
     return redirect("/login");
   }
 
+
   try {
     const res = await db
       .insert(project)
@@ -32,6 +34,8 @@ export const AddProjectAction = async (
         name: parsedValues.data.name,
       })
       .returning();
+    revalidatePath(`/org/${orgId}`)
+
     console.log(res)
     return { message: "success", res:res[0] };
   } catch (err) {
