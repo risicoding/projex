@@ -1,11 +1,11 @@
-import { create } from "zustand";
-import { Project } from "../types/project";
-import {v4 as uuidv4} from 'uuid'
+import { create } from 'zustand'
+import { Project } from '../types/project'
+import { v4 as uuidv4 } from 'uuid'
 
 interface ProjectStore {
-  projects: Project[];
-  initializeProject: (projects: Project[]) => void;
-  addProjects: (project: { name: string }) => void;
+  projects: Project[]
+  initializeProject: (projects: Project[]) => void
+  addProjects: (project: { name: string }) => void
 }
 
 export const useProjectStore = create<ProjectStore>((set) => ({
@@ -22,9 +22,9 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         ...projects,
         {
           ...project,
-          id: projects[projects.length - 1].id+1,
+          id: projects[projects.length - 1].id + 1,
           orgId: uuidv4(),
         },
       ],
     })),
-}));
+}))

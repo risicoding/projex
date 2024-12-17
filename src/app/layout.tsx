@@ -1,10 +1,10 @@
-import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
+import { dark } from '@clerk/themes'
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -16,5 +16,5 @@ export default function RootLayout({
         <body className="antialiased h-screen dark">{children}</body>
       </ClerkProvider>
     </html>
-  );
+  )
 }

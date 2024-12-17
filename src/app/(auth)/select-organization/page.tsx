@@ -1,9 +1,4 @@
-import {
-  OrganizationList,
-  RedirectToSignIn,
-  SignedIn,
-  SignedOut,
-} from "@clerk/nextjs";
+import { OrganizationList, RedirectToSignIn, SignedIn, SignedOut } from '@clerk/nextjs'
 
 const page = () => {
   return (
@@ -20,7 +15,7 @@ const page = () => {
         <RedirectToSignIn />
       </SignedOut>
     </>
-  );
-};
+  )
+}
 
-export default page;
+export default page

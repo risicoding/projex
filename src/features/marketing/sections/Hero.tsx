@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import { Open_Sans } from "next/font/google";
+import { cn } from '@/lib/utils'
+import { Open_Sans } from 'next/font/google'
 
 const opensans = Open_Sans({
-  weight: "300",
-  subsets: ["latin"],
-});
+  weight: '300',
+  subsets: ['latin'],
+})
 
 const Hero = () => {
   return (
@@ -12,7 +12,7 @@ const Hero = () => {
       <h1 className="bg-gradient-to-b from-neutral-50 to-neutral-500 animate-in fade-in duration-700 bg-clip-text text-transparent text-6xl text-center font-semibold">
         Manage your projects with ease
       </h1>
-      <p className={cn("text-lg text-center text-neutral-400", opensans.className)}>
+      <p className={cn('text-lg text-center text-neutral-400', opensans.className)}>
         Projex is a purpose-built tool for modern product management
       </p>
 
@@ -23,7 +23,7 @@ const Hero = () => {
         </span>
       </button>
     </section>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

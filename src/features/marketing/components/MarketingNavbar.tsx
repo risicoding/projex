@@ -1,20 +1,14 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
 
 const Navbar = () => {
   return (
     <div className="px-4 py-4">
-      <nav className="w-full px-8 py-3 bg-black border border-1px border-gray-700 shadow-md shadow-gray-700 rounded-full  flex flex-row justify-between">
+      <nav className="w-full px-6 py-3 bg-black border border-1px border-gray-700 shadow-md shadow-gray-700 rounded-full  flex flex-row justify-between">
         <div className="flex flex-row gap-3 items-center">
-          <Image
-            className="select-none"
-            src="/logo.svg"
-            width={40}
-            height={40}
-            alt="logo"
-          />
+          <Image className="select-none" src="/logo.svg" width={40} height={40} alt="logo" />
           <h2 className="text-xl">Projex</h2>
         </div>
         <div className="hidden sm:flex flex-row gap-3 items-center">
@@ -34,34 +28,27 @@ const Navbar = () => {
           </Link>
 
           <Link href="/login">
-          <button className="px-6 py-2 rounded-full relative text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
-            <span className="relative z-20">Login</span>
-          </button>
+            <button className="px-6 py-2 rounded-full relative text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
+              <span className="relative z-20">Login</span>
+            </button>
           </Link>
         </div>
       </nav>
     </div>
-  );
-};
+  )
+}
 
 type NavbarItemProps = {
-  name: string;
-  href: string;
-  className?: string;
-};
+  name: string
+  href: string
+  className?: string
+}
 const NavbarItem = ({ name, href, className }: NavbarItemProps) => {
   return (
     <Link href={href}>
-      <div
-        className={cn(
-          "text-neutral-300 hover:text-200 cursor-pointer",
-          className,
-        )}
-      >
-        {name}
-      </div>
+      <div className={cn('text-neutral-300 hover:text-200 cursor-pointer', className)}>{name}</div>
     </Link>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

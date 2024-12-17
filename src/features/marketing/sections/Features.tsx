@@ -1,28 +1,28 @@
-import { cn } from "@/lib/utils";
-import { Folder, Users, BarChart2 } from "lucide-react";
-import { Card, CardHeader } from "@/components/ui/card";
+import { cn } from '@/lib/utils'
+import { Folder, Users, BarChart2 } from 'lucide-react'
+import { Card, CardHeader } from '@/components/ui/card'
 
 const Features = () => {
   const featuresData = [
     {
       icon: <Folder className="h-12 w-12 text-blue-400" />,
-      heading: "Organize",
+      heading: 'Organize',
       description:
-        "Simplify your workflow with tools to manage tasks, deadlines, and priorities effortlessly.",
+        'Simplify your workflow with tools to manage tasks, deadlines, and priorities effortlessly.',
     },
     {
       icon: <Users className="h-12 w-12 text-green-400" />,
-      heading: "Collaborate",
+      heading: 'Collaborate',
       description:
-        "Work seamlessly with your team using shared boards, real-time updates, and streamlined communication.",
+        'Work seamlessly with your team using shared boards, real-time updates, and streamlined communication.',
     },
     {
       icon: <BarChart2 className="h-12 w-12 text-purple-400" />,
-      heading: "Track Progress",
+      heading: 'Track Progress',
       description:
-        "Monitor timelines, measure performance, and keep your projects on track with detailed analytics.",
+        'Monitor timelines, measure performance, and keep your projects on track with detailed analytics.',
     },
-  ];
+  ]
 
   return (
     <section className="px-8 py-20 bg-black text-white">
@@ -37,8 +37,8 @@ const Features = () => {
         ))}
       </div>
     </section>
-  );
-};
+  )
+}
 
 const FeaturesCard = ({
   icon,
@@ -46,16 +46,16 @@ const FeaturesCard = ({
   description,
   className,
 }: {
-  icon: React.ReactNode;
-  heading: string;
-  description: string;
-  className?: string;
+  icon: React.ReactNode
+  heading: string
+  description: string
+  className?: string
 }) => {
   return (
     <Card
       className={cn(
-        "p-8 rounded-lg shadow-md outline-neutral-50 outline-4 bg-black flex flex-col items-start space-y-4 hover:shadow-lg transition-shadow duration-300",
-        className,
+        'p-8 rounded-lg shadow-md outline-neutral-50 outline-4 bg-black flex flex-col items-start space-y-4 hover:shadow-lg transition-shadow duration-300',
+        className
       )}
     >
       <CardHeader className="p-0 space-y-4">
@@ -64,7 +64,7 @@ const FeaturesCard = ({
       </CardHeader>
       <p className="text-sm text-gray-400">{description}</p>
     </Card>
-  );
-};
+  )
+}
 
-export default Features;
+export default Features

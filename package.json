@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.2",
@@ -55,6 +56,7 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.4",
     "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.16",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",

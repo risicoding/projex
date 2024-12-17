@@ -1,9 +1,9 @@
-import { cn } from "@/lib/utils";
-import { Open_Sans } from "next/font/google";
+import { cn } from '@/lib/utils'
+import { Open_Sans } from 'next/font/google'
 const opensans = Open_Sans({
-  weight: "300",
-  subsets: ["latin"],
-});
+  weight: '300',
+  subsets: ['latin'],
+})
 
 const CtaSection = () => {
   return (
@@ -11,7 +11,7 @@ const CtaSection = () => {
       <h2 className="text-4xl font-semibold text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-50 to-neutral-500 animate-in fade-in duration-700 mb-6">
         Ready to take control of your projects?
       </h2>
-      <p className={cn("text-lg text-center text-neutral-400 mb-6", opensans.className)}>
+      <p className={cn('text-lg text-center text-neutral-400 mb-6', opensans.className)}>
         Projex streamlines your workflow, so you can focus on what truly matters.
       </p>
       <div className="flex gap-4">
@@ -32,8 +32,7 @@ const CtaSection = () => {
         </a>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default CtaSection;
-
+export default CtaSection

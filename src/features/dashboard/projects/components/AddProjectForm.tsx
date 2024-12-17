@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ProjectFormSchema } from "../ProjectSchema";
+'use client'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { ProjectFormSchema } from '../ProjectSchema'
 import {
   Form,
   FormField,
@@ -11,35 +11,32 @@ import {
   FormControl,
   FormMessage,
   FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { AddProjectAction } from "../actions/AddProjectAction";
-import { DialogClose } from "@/components/ui/dialog";
-import { useProjectStore } from "../store/projectStore";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { AddProjectAction } from '../actions/AddProjectAction'
+import { DialogClose } from '@/components/ui/dialog'
+import { useProjectStore } from '../store/projectStore'
 
 const AddProjectForm = () => {
-  const addProjects =useProjectStore((state)=>state.addProjects)
+  const addProjects = useProjectStore((state) => state.addProjects)
 
   const form = useForm<z.infer<typeof ProjectFormSchema>>({
     resolver: zodResolver(ProjectFormSchema),
     defaultValues: {
-      name: "",
+      name: '',
     },
-  });
+  })
 
   const onSubmit = async (values: z.infer<typeof ProjectFormSchema>) => {
-    addProjects({...values,})
-    const res = await AddProjectAction(values);
-    console.log(res);
-  };
+    addProjects({ ...values })
+    const res = await AddProjectAction(values)
+    console.log(res)
+  }
 
   return (
     <Form {...form}>
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="name"
@@ -60,7 +57,7 @@ const AddProjectForm = () => {
         </DialogClose>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default AddProjectForm;
+export default AddProjectForm

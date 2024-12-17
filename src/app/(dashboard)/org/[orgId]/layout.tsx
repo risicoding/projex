@@ -1,9 +1,9 @@
-import React from "react";
-import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
-import OrgSwitcher from "@/features/dashboard/org-switcher/OrgSwitcher";
-import Sidebar from "@/features/dashboard/sidebar/Sidebar";
-import MobileSidebar from "@/features/dashboard/sidebar/MobileSidebar";
-import Navbar from "@/features/dashboard/org-switcher/DashboardNavbar";
+import React from 'react'
+import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/nextjs'
+import OrgSwitcher from '@/features/dashboard/org-switcher/OrgSwitcher'
+import Sidebar from '@/features/dashboard/sidebar/Sidebar'
+import MobileSidebar from '@/features/dashboard/sidebar/MobileSidebar'
+import Navbar from '@/features/dashboard/org-switcher/DashboardNavbar'
 
 const OrgLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -22,15 +22,16 @@ const OrgLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
 
               <Navbar />
-
             </div>
-              <div className="md:pl-[260px]">{children}</div>
+            <div className="md:pl-[260px]">{children}</div>
           </div>
         </OrgSwitcher>
       </SignedIn>
-      <SignedOut><RedirectToSignIn/></SignedOut>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
     </>
-  );
-};
+  )
+}
 
-export default OrgLayout;
+export default OrgLayout
