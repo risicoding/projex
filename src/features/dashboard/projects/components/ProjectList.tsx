@@ -7,27 +7,28 @@ import { useProjectStore } from '../store/projectStore'
 import { useEffect } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Variants for project list container
 const projectListVariants = cva('flex', {
   variants: {
     variant: {
-      vertical: 'flex-col gap-3 p-4 items-start justify-start',
-      horizontal: 'flex-row flex-wrap gap-6 p-12 items-start justify-start',
+      vertical: 'flex-col gap-3 items-start justify-start',
+      horizontal: 'flex-row flex-wrap gap-6  items-start justify-start',
     },
   },
 })
 
 // Variants for the project link component
 const projectLinkVariants = cva(
-  'group relative flex flex-col items-center justify-center  border border-gray-700 rounded-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500',
+  'group relative flex flex-col   border border-gray-700 rounded-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500',
   {
     variants: {
       variant: {
         vertical:
-          'w-full px-4 py-3 text-sm items-start font-medium text-gray-300 hover:bg-gray-700 hover:text-white',
+          ' items-center justify-start w-full px-4 py-3 text-sm items-start font-medium text-gray-300 hover:bg-gray-700 hover:text-white',
         horizontal:
-          'px-6 py-4 w-40 h-40 text-base  font-semibold text-gray-100 bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 hover:from-gray-700 hover:via-gray-800 hover:to-gray-700 shadow-lg',
+          'items-center justify-end p-6  w-32 h-32 text-base  font-semibold text-gray-100 hover:from-gray-700 hover:via-gray-800 hover:to-gray-700 shadow-lg',
       },
     },
     defaultVariants: {
@@ -56,6 +57,26 @@ const ProjectList = ({
     initializeProject(projects)
   }, [initializeProject, projects])
 
+
+  if (storedProjects.length===0) {
+    return (
+      <div className="flex items-center justify-center p-4">
+        <Card className="w-full max-w-md text-center shadow-md">
+          <CardHeader>
+            <CardTitle className="text-lg text-gray-700 dark:text-gray-200">
+              No Projects Found
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
+              You currently have no projects. Start by adding a new one to get organized and manage
+              your tasks effectively.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
   return (
     <div className={cn(projectListVariants({ variant, className }))}>
       {storedProjects?.map((project) => (
@@ -88,7 +109,10 @@ const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
         </div>
       )}
 
+
       {/* Text */}
+
+      
       <span className={variant === 'horizontal' ? 'mt-2' : ''}>{children}</span>
 
       {/* Arrow for vertical orientation */}

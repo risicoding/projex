@@ -11,8 +11,8 @@ const Navbar = () => {
           <UserIcon className="size-5 text-gray-300" />
         </div>
         <OrganizationSwitcher
-          afterSelectOrganizationUrl="/org/:orgId"
-          afterCreateOrganizationUrl="/org/orgId"
+          afterSelectOrganizationUrl="/org/:id"
+          afterCreateOrganizationUrl="/org/id"
         />
         <UserButton />
       </div>
