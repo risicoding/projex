@@ -6,7 +6,7 @@ import React from "react";
 const Navbar = () => {
   return (
     <div className="px-4 py-4">
-      <nav className="w-full px-6 py-3 bg-black border border-1px border-gray-700 shadow-md shadow-gray-700 rounded-full  flex flex-row justify-between">
+      <nav className="w-full px-8 py-3 bg-black border border-1px border-gray-700 shadow-md shadow-gray-700 rounded-full  flex flex-row justify-between">
         <div className="flex flex-row gap-3 items-center">
           <Image
             className="select-none"

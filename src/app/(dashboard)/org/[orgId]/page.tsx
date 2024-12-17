@@ -1,6 +1,8 @@
+import ProjectsListContainer from "@/features/dashboard/projects/components/ProjectsListContainer"
+
 const page = () => {
   return (
-    <div>page</div>
+  <ProjectsListContainer variant="horizontal"/>
   )
 }
 
