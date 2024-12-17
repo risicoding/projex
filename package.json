@@ -13,7 +13,8 @@
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "prepare": "husky"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.2",
@@ -55,6 +56,8 @@
     "drizzle-kit": "^0.30.1",
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "tailwindcss": "^3.4.16",
