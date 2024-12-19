@@ -7,7 +7,8 @@ import { useProjectStore } from '../store/projectStore'
 import { useEffect } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { usePathname } from 'next/navigation'
 
 // Variants for project list container
 const projectListVariants = cva('flex', {
@@ -53,12 +54,13 @@ const ProjectList = ({
   const initializeProject = useProjectStore((state) => state.initializeProject)
   const storedProjects = useProjectStore((state) => state.projects)
 
+  const pathname = usePathname()
+
   useEffect(() => {
     initializeProject(projects)
   }, [initializeProject, projects])
 
-
-  if (storedProjects.length===0) {
+  if (storedProjects.length === 0) {
     return (
       <div className="flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center shadow-md">
@@ -80,7 +82,7 @@ const ProjectList = ({
   return (
     <div className={cn(projectListVariants({ variant, className }))}>
       {storedProjects?.map((project) => (
-        <ProjectLink href="/home" key={project.id} variant={variant}>
+        <ProjectLink href={`${pathname}/project/${project.id}`} key={project.id} variant={variant}>
           {project.name}
         </ProjectLink>
       ))}
@@ -109,10 +111,8 @@ const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
         </div>
       )}
 
-
       {/* Text */}
 
-      
       <span className={variant === 'horizontal' ? 'mt-2' : ''}>{children}</span>
 
       {/* Arrow for vertical orientation */}

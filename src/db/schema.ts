@@ -1,4 +1,3 @@
-import { relations } from 'drizzle-orm'
 import { pgTable, varchar, serial, text, timestamp, integer } from 'drizzle-orm/pg-core'
 
 export const project = pgTable('user', {
@@ -9,19 +8,9 @@ export const project = pgTable('user', {
   name: text().notNull(),
 })
 
-export const projectRelations = relations(project, ({ many }) => ({
-  boardColumns: many(boardColumn),
-}))
-
-export const boardColumn = pgTable('boardColumn', {
+export const boardItem = pgTable('boardItem', {
   id: serial('id').primaryKey(),
-  name: text(),
+  name: varchar().notNull(),
   projectId: integer().references(() => project.id),
+  parentId: integer().default(0),
 })
-
-export const boardColumnRelations = relations(boardColumn, ({ one }) => ({
-  project: one(project, {
-    fields: [boardColumn.projectId],
-    references: [project.id],
-  }),
-}))

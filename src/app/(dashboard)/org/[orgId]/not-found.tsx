@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
 
 export default function NotFoundPage() {
   return (
@@ -13,8 +13,8 @@ export default function NotFoundPage() {
         </CardHeader>
         <CardContent>
           <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
-            You currently have no projects. Start by adding a new one to get
-            organized and manage your tasks effectively.
+            You currently have no projects. Start by adding a new one to get organized and manage
+            your tasks effectively.
           </p>
           <Button className="gap-2" size="lg">
             <Plus size={18} /> Add Project
@@ -22,6 +22,5 @@ export default function NotFoundPage() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
-
