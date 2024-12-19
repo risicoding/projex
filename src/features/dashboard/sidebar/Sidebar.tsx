@@ -74,9 +74,8 @@ const Sidebar = () => {
       </div>
 
       {/* Projects Section with Custom ProjectLink */}
-      <div className='p-4'>
-
-      <ProjectsListContainer variant="vertical" />
+      <div className="p-4">
+        <ProjectsListContainer variant="vertical" />
       </div>
     </aside>
   )

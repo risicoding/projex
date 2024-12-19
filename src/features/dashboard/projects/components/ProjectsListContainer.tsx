@@ -2,14 +2,13 @@ import React from 'react'
 import ProjectList from './ProjectList'
 import { getProjects } from '../utils/GetProjects'
 import { Project } from '../types/project'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const ProjectsListContainer = async ({ variant }: { variant: 'horizontal' | 'vertical' }) => {
   const projects = (await getProjects()) as Project[]
   console.log(projects)
 
-  if (projects.length===0) {
+  if (projects.length === 0) {
     return (
       <div className="flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center shadow-md">
