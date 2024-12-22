@@ -4,6 +4,7 @@ import { boardItem } from '@/db/schema'
 import { InferSelectModel } from 'drizzle-orm'
 import { useState } from 'react'
 import { updateItem } from '../actions/BoardActions'
+import AddItem from './AddItem'
 
 type Item = InferSelectModel<typeof boardItem>
 
@@ -35,37 +36,38 @@ const Board = ({ boardItems }: { boardItems: Item[] }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 py-12 px-8 overflow-x-auto w-full">
+      <div className="flex gap-4 py-12 px-8 overflow-x-auto">
         {['to-do', 'in-progress', 'done'].map((status) => (
           <div
-            className="space-y-3 bg-gradient-to-b from-gray-800 to-gray-900 p-4 rounded-lg min-w-[250px] shadow-lg flex flex-col flex-grow"
+            className="space-y-3 bg-gradient-to-b from-gray-800 to-gray-900 p-4 rounded-lg min-w-[250px] shadow-lg"
             key={status}
           >
             <h3 className="text-white font-semibold text-lg">{status.replace('-', ' ')}</h3>
-            <Droppable  droppableId={status}
-            >
-              {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}
-                className='h-full '>
-                  {groupedTasks[status as TaskStatus].map((item: Item, index: number) => (
-                    <Draggable key={item.id} draggableId={String(item.id)} index={index}>
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className="bg-gradient-to-r from-gray-700 to-gray-800 p-3 mb-2 rounded-md text-white"
-                          style={provided.draggableProps.style}
-                        >
-                          {item.name}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            <div>
+              <Droppable droppableId={status}>
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef} className="min-h-4">
+                    {groupedTasks[status as TaskStatus].map((item: Item, index: number) => (
+                      <Draggable key={item.id} draggableId={String(item.id)} index={index}>
+                        {(provided) => (
+                          <div
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                            className="bg-gradient-to-r from-gray-700 to-gray-800 p-3 mb-2 rounded-md text-white"
+                            style={provided.draggableProps.style}
+                          >
+                            {item.name}
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              <AddItem columnId={status} />
+            </div>
           </div>
         ))}
       </div>

@@ -12,5 +12,5 @@ export const boardItem = pgTable('boardItem', {
   id: serial('id').primaryKey(),
   name: varchar().notNull(),
   projectId: integer().references(() => project.id),
-  columnId: varchar()
+  columnId: varchar(),
 })
