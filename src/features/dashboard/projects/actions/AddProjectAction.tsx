@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 
 export const AddProjectAction = async (values: z.infer<typeof ProjectFormSchema>) => {
+  console.log('values:',values)
   const parsedValues = ProjectFormSchema.safeParse(values)
   console.log(parsedValues)
 

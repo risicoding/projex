@@ -2,18 +2,27 @@
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { boardItem } from '@/db/schema'
 import { InferSelectModel } from 'drizzle-orm'
-import { useState } from 'react'
-import { updateItem } from '../actions/BoardActions'
+import { updateItem } from '../actions/UpdateBoardItemAction'
 import AddItem from './AddItem'
+import { useMutationState, useSuspenseQuery } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
+import { GetBoardItemsAction } from '../actions/GetBoardItemsAction'
 
-type Item = InferSelectModel<typeof boardItem>
+export type Item = InferSelectModel<typeof boardItem>
 
-const Board = ({ boardItems }: { boardItems: Item[] }) => {
-  const [items, setItems] = useState<Item[]>(boardItems)
+const Board = () => {
+  const { projectId } = useParams<{ projectId: string }>()
+
+  const { data: items } = useSuspenseQuery<Item[]>({
+    queryKey: ['board', projectId],
+    queryFn: async () => {
+      const res = await GetBoardItemsAction(Number(projectId))
+      return res as Item[]
+    },
+  })
 
   // Update task status in the database
   const handleUpdate = async (id: number, columnId: string) => {
-    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, columnId } : item)))
     await updateItem(id, columnId)
   }
 
@@ -48,7 +57,7 @@ const Board = ({ boardItems }: { boardItems: Item[] }) => {
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef} className="min-h-4">
                     {groupedTasks[status as TaskStatus].map((item: Item, index: number) => (
-                      <Draggable key={item.id} draggableId={String(item.id)} index={index}>
+                      <Draggable key={index} draggableId={String(item.id)} index={index}>
                         {(provided) => (
                           <div
                             {...provided.draggableProps}

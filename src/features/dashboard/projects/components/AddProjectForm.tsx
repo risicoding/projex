@@ -16,10 +16,38 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { AddProjectAction } from '../actions/AddProjectAction'
 import { DialogClose } from '@/components/ui/dialog'
-import { useProjectStore } from '../store/projectStore'
+import { QueryClient, useMutation } from '@tanstack/react-query'
+import { Project } from '../types/project'
 
 const AddProjectForm = () => {
-  const addProjects = useProjectStore((state) => state.addProjects)
+  const queryClient = new QueryClient()
+
+  const mutation = useMutation({
+    mutationKey: ['addProject'],
+    mutationFn: (values: z.infer<typeof ProjectFormSchema>) => AddProjectAction(values),
+
+    onMutate: async (newProject: z.infer<typeof ProjectFormSchema>) => {
+      console.log('New pro', newProject)
+      await queryClient.cancelQueries({ queryKey: ['projects'] })
+      const previousProjects = queryClient.getQueryData<Project[]>(['projects']) || []
+      console.log('Prev pros', previousProjects)
+
+      // Update the query data with a fallback for old data
+      queryClient.setQueryData(['projects'], (old: Project[] | undefined) => [
+        ...(old || []),
+        newProject,
+      ])
+
+      return { previousProjects }
+    },
+    onError: (err, newItem, context) => {
+      queryClient.setQueryData(['projects'], context?.previousProjects)
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
+    },
+  })
 
   const form = useForm<z.infer<typeof ProjectFormSchema>>({
     resolver: zodResolver(ProjectFormSchema),
@@ -29,9 +57,8 @@ const AddProjectForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof ProjectFormSchema>) => {
-    addProjects({ ...values })
-    const res = await AddProjectAction(values)
-    console.log(res)
+    console.log()
+    mutation.mutate(values)
   }
 
   return (

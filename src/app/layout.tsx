@@ -1,6 +1,8 @@
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
+import Providers from './queryProvider'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -8,13 +10,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider
-        appearance={{
-          baseTheme: dark,
-        }}
-      >
-        <body className="antialiased h-screen dark">{children}</body>
-      </ClerkProvider>
+      <body className="antialiased h-screen dark">
+        <Providers>
+          <ClerkProvider
+            appearance={{
+              baseTheme: dark,
+            }}
+          >
+            {children}
+          </ClerkProvider>
+        </Providers>
+      </body>
     </html>
   )
 }

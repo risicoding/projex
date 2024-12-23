@@ -1,6 +1,5 @@
 'use client'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Form,
@@ -14,32 +13,46 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 import { useParams } from 'next/navigation'
-import { AddBoardItemAction } from '../actions/AddItemAction'
-
-export const addItemSchema = z.object({
-  name: z.string().nonempty('Name is required').min(3, 'Name must be at least 3 characters'),
-  projectId: z.number(),
-  columnId: z.string().optional(),
-})
-
-type AddItemFormValues = z.infer<typeof addItemSchema>
+import { AddBoardItemAction } from '../actions/AddBoardItemAction'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { AddItemSchema, AddItemType } from '../schema/AddItemSchema'
+import { Item } from './Board'
 
 const AddItemForm = ({ columnId }: { columnId: string }) => {
+  const queryClient = useQueryClient()
   const { projectId } = useParams<{ projectId: string }>()
-  const projectIdNum = Number(projectId)
 
-  const form = useForm<AddItemFormValues>({
-    resolver: zodResolver(addItemSchema),
+  const form = useForm<AddItemType>({
+    resolver: zodResolver(AddItemSchema),
     defaultValues: {
       name: '',
       columnId,
-      projectId: projectIdNum,
+      projectId: Number(projectId),
     },
   })
 
-  const onSubmit = (data: AddItemFormValues) => {
-    AddBoardItemAction(data)
-    console.log('Form submitted with data:', data)
+  const mutation = useMutation({
+    mutationKey: ['items', projectId],
+    mutationFn: (values: AddItemType) => AddBoardItemAction(values),
+    onMutate: async (newItem) => {
+      await queryClient.cancelQueries({ queryKey: ['projects'] })
+      const previousItems = queryClient.getQueryData(['board', projectId])
+
+      queryClient.setQueryData(['board', projectId], (old: Item[]) => [...old, newItem])
+
+      return { previousItems }
+    },
+    onError: (err, newItem, context) => {
+      queryClient.setQueryData(['board', projectId], context?.previousItems)
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['board', projectId] })
+    },
+  })
+
+  const onSubmit = async (values: AddItemType) => {
+    mutation.mutate(values)
   }
 
   return (

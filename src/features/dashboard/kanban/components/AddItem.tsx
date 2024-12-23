@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Plus } from 'lucide-react'
 import AddItemForm from './AddItemForm'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 export type AddItemProps = {
   columnId: string
@@ -19,6 +20,7 @@ const AddItem = ({ columnId }: AddItemProps) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="w-3/4">
+        <DialogTitle className='hidden'>Add Item</DialogTitle>
         <AddItemForm columnId={columnId} />
       </DialogContent>
     </Dialog>

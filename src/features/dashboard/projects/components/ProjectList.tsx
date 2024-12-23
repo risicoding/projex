@@ -3,12 +3,14 @@
 import Link from 'next/link'
 import { ArrowRight, ExternalLink, MoreHorizontal } from 'lucide-react'
 import { Project } from '../types/project'
-import { useProjectStore } from '../store/projectStore'
-import { useEffect } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePathname } from 'next/navigation'
+import { useMutationState, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { z } from 'zod'
+import { ProjectFormSchema } from '../ProjectSchema'
+import { GetProjectsAction } from '../actions/GetProjectsAction'
 
 // Variants for project list container
 const projectListVariants = cva('flex', {
@@ -43,24 +45,24 @@ const iconButtonVariants =
   'p-2 rounded-md text-gray-400 transition duration-300 hover:invert hover:scale-110'
 
 const ProjectList = ({
-  projects,
   variant,
   className,
 }: {
-  projects: Project[]
   variant: 'horizontal' | 'vertical'
   className?: string
 }) => {
-  const initializeProject = useProjectStore((state) => state.initializeProject)
-  const storedProjects = useProjectStore((state) => state.projects)
+  const { data } = useSuspenseQuery<Project[]>({
+    queryKey: ['projects'],
+    queryFn:async()=>{
+      const res=await GetProjectsAction()
+      return res as Project[]
+    }
+  })
+  console.log(data)
 
   const pathname = usePathname()
 
-  useEffect(() => {
-    initializeProject(projects)
-  }, [initializeProject, projects])
-
-  if (storedProjects.length === 0) {
+  if (!data) {
     return (
       <div className="flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center shadow-md">
@@ -81,11 +83,19 @@ const ProjectList = ({
   }
   return (
     <div className={cn(projectListVariants({ variant, className }))}>
-      {storedProjects?.map((project) => (
-        <ProjectLink href={`${pathname}/project/${project.id}`} key={project.id} variant={variant}>
-          {project.name}
-        </ProjectLink>
-      ))}
+      {data?.map((project: Project, index) => {
+        let urlPath = ''
+        if (project.id) {
+          urlPath = `${pathname}/project/${project.id}`
+        } else {
+          urlPath = pathname
+        }
+        return (
+          <ProjectLink href={urlPath} key={index} variant={variant}>
+            {project.name}
+          </ProjectLink>
+        )
+      })}
     </div>
   )
 }
