@@ -51,7 +51,6 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
     },
   })
 
-
   const onSubmit = async (values: AddItemType) => {
     mutation.mutate(values)
   }

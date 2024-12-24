@@ -4,13 +4,14 @@ import { boardItem } from '@/db/schema'
 import { InferSelectModel } from 'drizzle-orm'
 import { updateItem } from '../actions/UpdateBoardItemAction'
 import AddItem from './AddItem'
-import { useMutationState, useSuspenseQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import { GetBoardItemsAction } from '../actions/GetBoardItemsAction'
 
 export type Item = InferSelectModel<typeof boardItem>
 
 const Board = () => {
+  const queryClient = useQueryClient()
   const { projectId } = useParams<{ projectId: string }>()
 
   const { data: items } = useSuspenseQuery<Item[]>({
@@ -21,9 +22,38 @@ const Board = () => {
     },
   })
 
+  const { mutate } = useMutation({
+    mutationKey: ['updateItem'],
+    mutationFn: async (data: { id: number; columnId: string }) => {
+      const res = await updateItem(data.id, data.columnId)
+      return res
+    },
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({ queryKey: ['board', projectId] })
+
+      const previousItems = queryClient.getQueryData(['board', projectId])
+
+      queryClient.setQueryData(['board', projectId], (old: Item[]) => {
+        return old.map((item) => {
+          if (item.id === data.id) return { ...item, columnId: data.columnId }
+          return item
+        })
+      })
+
+      return { previousItems }
+    },
+    onError: (err, data, context) => {
+      queryClient.setQueryData(['board', projectId], context?.previousItems)
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['board', projectId] })
+    },
+  })
+
   // Update task status in the database
   const handleUpdate = async (id: number, columnId: string) => {
-    await updateItem(id, columnId)
+    mutate({ id, columnId })
   }
 
   // Drag-and-drop logic
