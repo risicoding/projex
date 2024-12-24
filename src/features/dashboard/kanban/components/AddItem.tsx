@@ -20,7 +20,7 @@ const AddItem = ({ columnId }: AddItemProps) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="w-3/4">
-        <DialogTitle className='hidden'>Add Item</DialogTitle>
+        <DialogTitle className="hidden">Add Item</DialogTitle>
         <AddItemForm columnId={columnId} />
       </DialogContent>
     </Dialog>

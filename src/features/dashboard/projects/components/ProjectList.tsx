@@ -51,14 +51,9 @@ const ProjectList = ({
   variant: 'horizontal' | 'vertical'
   className?: string
 }) => {
-  const { data } = useSuspenseQuery<Project[]>({
+  const { data } = useQuery<Project[]>({
     queryKey: ['projects'],
-    queryFn:async()=>{
-      const res=await GetProjectsAction()
-      return res as Project[]
-    }
   })
-  console.log(data)
 
   const pathname = usePathname()
 

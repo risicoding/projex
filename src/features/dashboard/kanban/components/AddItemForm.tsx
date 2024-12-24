@@ -22,20 +22,11 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
   const queryClient = useQueryClient()
   const { projectId } = useParams<{ projectId: string }>()
 
-  const form = useForm<AddItemType>({
-    resolver: zodResolver(AddItemSchema),
-    defaultValues: {
-      name: '',
-      columnId,
-      projectId: Number(projectId),
-    },
-  })
-
   const mutation = useMutation({
     mutationKey: ['items', projectId],
     mutationFn: (values: AddItemType) => AddBoardItemAction(values),
     onMutate: async (newItem) => {
-      await queryClient.cancelQueries({ queryKey: ['projects'] })
+      await queryClient.cancelQueries({ queryKey: ['board'] })
       const previousItems = queryClient.getQueryData(['board', projectId])
 
       queryClient.setQueryData(['board', projectId], (old: Item[]) => [...old, newItem])
@@ -50,6 +41,16 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
       queryClient.invalidateQueries({ queryKey: ['board', projectId] })
     },
   })
+
+  const form = useForm<AddItemType>({
+    resolver: zodResolver(AddItemSchema),
+    defaultValues: {
+      name: '',
+      columnId,
+      projectId: Number(projectId),
+    },
+  })
+
 
   const onSubmit = async (values: AddItemType) => {
     mutation.mutate(values)

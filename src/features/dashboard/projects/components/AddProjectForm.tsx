@@ -16,21 +16,20 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { AddProjectAction } from '../actions/AddProjectAction'
 import { DialogClose } from '@/components/ui/dialog'
-import { QueryClient, useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Project } from '../types/project'
 
 const AddProjectForm = () => {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationKey: ['addProject'],
     mutationFn: (values: z.infer<typeof ProjectFormSchema>) => AddProjectAction(values),
 
     onMutate: async (newProject: z.infer<typeof ProjectFormSchema>) => {
-      console.log('New pro', newProject)
       await queryClient.cancelQueries({ queryKey: ['projects'] })
-      const previousProjects = queryClient.getQueryData<Project[]>(['projects']) || []
-      console.log('Prev pros', previousProjects)
+
+      const previousProjects = queryClient.getQueryData(['projects'])
 
       // Update the query data with a fallback for old data
       queryClient.setQueryData(['projects'], (old: Project[] | undefined) => [
