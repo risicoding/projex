@@ -1,6 +1,6 @@
-import { OrganizationSwitcher, UserButton } from '@clerk/nextjs'
-import { Bell, UserIcon } from 'lucide-react'
-import Image from 'next/image'
+import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
+import { Bell, UserIcon } from 'lucide-react';
+import Image from 'next/image';
 const Navbar = () => {
   return (
     <div className="flex flex-row pl-4 pr-2 w-full  gap-3 justify-between">
@@ -17,7 +17,7 @@ const Navbar = () => {
         <UserButton />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -1,7 +1,7 @@
-import { cn } from '@/lib/utils'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
 const Navbar = () => {
   return (
@@ -35,20 +35,20 @@ const Navbar = () => {
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
 type NavbarItemProps = {
-  name: string
-  href: string
-  className?: string
-}
+  name: string;
+  href: string;
+  className?: string;
+};
 const NavbarItem = ({ name, href, className }: NavbarItemProps) => {
   return (
     <Link href={href}>
       <div className={cn('text-neutral-300 hover:text-200 cursor-pointer', className)}>{name}</div>
     </Link>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

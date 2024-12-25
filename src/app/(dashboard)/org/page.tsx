@@ -1,12 +1,12 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+'use client';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 const Page = () => {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    router.push('/select-organization')
-  }, [router])
+    router.push('/select-organization');
+  }, [router]);
   return (
     <div role="status" className="flex flex-col w-full justify-center items-center">
       <svg
@@ -27,7 +27,7 @@ const Page = () => {
       </svg>
       <span className="sr-only">Loading...</span>
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

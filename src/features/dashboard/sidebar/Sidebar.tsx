@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { Home, Users, Settings, PlusCircle } from 'lucide-react'
-import { OrganizationSwitcher } from '@clerk/nextjs'
+import Image from 'next/image';
+import Link from 'next/link';
+import { Home, Users, Settings, PlusCircle } from 'lucide-react';
+import { OrganizationSwitcher } from '@clerk/nextjs';
 import {
   Dialog,
   DialogTrigger,
@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogDescription,
   DialogHeader,
-} from '@/components/ui/dialog'
-import AddProjectForm from '../projects/components/AddProjectForm'
-import ProjectsListContainer from '../projects/components/ProjectsListContainer'
+} from '@/components/ui/dialog';
+import AddProjectForm from '../projects/components/AddProjectForm';
+import ProjectsListContainer from '../projects/components/ProjectsListContainer';
 
 // Custom Link Component for Projects
 
@@ -78,7 +78,7 @@ const Sidebar = () => {
         <ProjectsListContainer variant="vertical" />
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

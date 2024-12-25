@@ -1,12 +1,12 @@
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Plus } from 'lucide-react'
-import AddItemForm from './AddItemForm'
-import { DialogTitle } from '@radix-ui/react-dialog'
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Plus } from 'lucide-react';
+import AddItemForm from './AddItemForm';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 export type AddItemProps = {
-  columnId: string
-}
+  columnId: string;
+};
 const AddItem = ({ columnId }: AddItemProps) => {
   return (
     <Dialog>
@@ -24,7 +24,7 @@ const AddItem = ({ columnId }: AddItemProps) => {
         <AddItemForm columnId={columnId} />
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default AddItem
+export default AddItem;

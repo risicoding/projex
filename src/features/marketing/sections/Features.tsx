@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils'
-import { Folder, Users, BarChart2 } from 'lucide-react'
-import { Card, CardHeader } from '@/components/ui/card'
+import { cn } from '@/lib/utils';
+import { Folder, Users, BarChart2 } from 'lucide-react';
+import { Card, CardHeader } from '@/components/ui/card';
 
 const Features = () => {
   const featuresData = [
@@ -22,7 +22,7 @@ const Features = () => {
       description:
         'Monitor timelines, measure performance, and keep your projects on track with detailed analytics.',
     },
-  ]
+  ];
 
   return (
     <section className="px-8 py-20 bg-black text-white">
@@ -37,8 +37,8 @@ const Features = () => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
 const FeaturesCard = ({
   icon,
@@ -46,10 +46,10 @@ const FeaturesCard = ({
   description,
   className,
 }: {
-  icon: React.ReactNode
-  heading: string
-  description: string
-  className?: string
+  icon: React.ReactNode;
+  heading: string;
+  description: string;
+  className?: string;
 }) => {
   return (
     <Card
@@ -64,7 +64,7 @@ const FeaturesCard = ({
       </CardHeader>
       <p className="text-sm text-gray-400">{description}</p>
     </Card>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;

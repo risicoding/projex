@@ -1,9 +1,9 @@
-import BoardContainer from '@/features/dashboard/kanban/components/BoardContainer'
-import React from 'react'
+import BoardContainer from '@/features/dashboard/kanban/components/BoardContainer';
+import React from 'react';
 const Page = async ({ params }: { params: Promise<{ projectId: number }> }) => {
-  const { projectId } = await params
+  const { projectId } = await params;
 
-  return <BoardContainer projectId={projectId} />
-}
+  return <BoardContainer projectId={projectId} />;
+};
 
-export default Page
+export default Page;

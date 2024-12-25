@@ -1,11 +1,11 @@
-import { cn } from '@/lib/utils'
-import { Open_Sans } from 'next/font/google'
-import { FaGithub } from 'react-icons/fa'
+import { cn } from '@/lib/utils';
+import { Open_Sans } from 'next/font/google';
+import { FaGithub } from 'react-icons/fa';
 
 const opensans = Open_Sans({
   weight: '300',
   subsets: ['latin'],
-})
+});
 
 const Footer = () => {
   return (
@@ -41,7 +41,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

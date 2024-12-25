@@ -1,77 +1,77 @@
-'use client'
-import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
-import { boardItem } from '@/db/schema'
-import { InferSelectModel } from 'drizzle-orm'
-import { updateItem } from '../actions/UpdateBoardItemAction'
-import AddItem from './AddItem'
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { useParams } from 'next/navigation'
-import { GetBoardItemsAction } from '../actions/GetBoardItemsAction'
+'use client';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
+import { boardItem } from '@/db/schema';
+import { InferSelectModel } from 'drizzle-orm';
+import { updateItem } from '../actions/UpdateBoardItemAction';
+import AddItem from './AddItem';
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import { GetBoardItemsAction } from '../actions/GetBoardItemsAction';
 
-export type Item = InferSelectModel<typeof boardItem>
+export type Item = InferSelectModel<typeof boardItem>;
 
 const Board = () => {
-  const queryClient = useQueryClient()
-  const { projectId } = useParams<{ projectId: string }>()
+  const queryClient = useQueryClient();
+  const { projectId } = useParams<{ projectId: string }>();
 
   const { data: items } = useSuspenseQuery<Item[]>({
     queryKey: ['board', projectId],
     queryFn: async () => {
-      const res = await GetBoardItemsAction(Number(projectId))
-      return res as Item[]
+      const res = await GetBoardItemsAction(Number(projectId));
+      return res as Item[];
     },
-  })
+  });
 
   const { mutate } = useMutation({
     mutationKey: ['updateItem'],
     mutationFn: async (data: { id: number; columnId: string }) => {
-      const res = await updateItem(data.id, data.columnId)
-      return res
+      const res = await updateItem(data.id, data.columnId);
+      return res;
     },
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: ['board', projectId] })
+      await queryClient.cancelQueries({ queryKey: ['board', projectId] });
 
-      const previousItems = queryClient.getQueryData(['board', projectId])
+      const previousItems = queryClient.getQueryData(['board', projectId]);
 
       queryClient.setQueryData(['board', projectId], (old: Item[]) => {
         return old.map((item) => {
-          if (item.id === data.id) return { ...item, columnId: data.columnId }
-          return item
-        })
-      })
+          if (item.id === data.id) return { ...item, columnId: data.columnId };
+          return item;
+        });
+      });
 
-      return { previousItems }
+      return { previousItems };
     },
     onError: (err, data, context) => {
-      queryClient.setQueryData(['board', projectId], context?.previousItems)
+      queryClient.setQueryData(['board', projectId], context?.previousItems);
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['board', projectId] })
+      queryClient.invalidateQueries({ queryKey: ['board', projectId] });
     },
-  })
+  });
 
   // Update task status in the database
   const handleUpdate = async (id: number, columnId: string) => {
-    mutate({ id, columnId })
-  }
+    mutate({ id, columnId });
+  };
 
   // Drag-and-drop logic
   const onDragEnd = (result: DropResult) => {
-    const { destination, draggableId } = result
-    if (!destination) return
+    const { destination, draggableId } = result;
+    if (!destination) return;
 
-    const newStatus = destination.droppableId
-    handleUpdate(Number(draggableId), newStatus)
-  }
+    const newStatus = destination.droppableId;
+    handleUpdate(Number(draggableId), newStatus);
+  };
 
-  type TaskStatus = 'to-do' | 'in-progress' | 'done'
+  type TaskStatus = 'to-do' | 'in-progress' | 'done';
 
   const groupedTasks: Record<TaskStatus, Item[]> = {
     'to-do': items.filter((task) => task.columnId === 'to-do'),
     'in-progress': items.filter((task) => task.columnId === 'in-progress'),
     done: items.filter((task) => task.columnId === 'done'),
-  }
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -111,7 +111,7 @@ const Board = () => {
         ))}
       </div>
     </DragDropContext>
-  )
-}
+  );
+};
 
-export default Board
+export default Board;

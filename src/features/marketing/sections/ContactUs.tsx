@@ -1,12 +1,12 @@
-import { cn } from '@/lib/utils'
-import { Open_Sans } from 'next/font/google'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils';
+import { Open_Sans } from 'next/font/google';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 const opensans = Open_Sans({
   weight: '300',
   subsets: ['latin'],
-})
+});
 
 const ContactUs = () => {
   return (
@@ -43,7 +43,7 @@ const ContactUs = () => {
         </div>
       </form>
     </section>
-  )
-}
+  );
+};
 
-export default ContactUs
+export default ContactUs;

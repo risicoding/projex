@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'next/link';
 export default function Custom404() {
   return (
     <section className="flex flex-col gap-6 items-center justify-center sm:px-6 px-3 py-10 min-h-screen">
@@ -18,5 +18,5 @@ export default function Custom404() {
         </Link>
       </button>
     </section>
-  )
+  );
 }

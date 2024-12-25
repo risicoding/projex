@@ -1,9 +1,9 @@
-import { cn } from '@/lib/utils'
-import { Open_Sans } from 'next/font/google'
+import { cn } from '@/lib/utils';
+import { Open_Sans } from 'next/font/google';
 const opensans = Open_Sans({
   weight: '300',
   subsets: ['latin'],
-})
+});
 
 const CtaSection = () => {
   return (
@@ -32,7 +32,7 @@ const CtaSection = () => {
         </a>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default CtaSection
+export default CtaSection;

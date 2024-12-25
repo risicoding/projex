@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import AddProjectForm from '@/features/dashboard/projects/components/AddProjectForm'
-import ProjectsListContainer from '@/features/dashboard/projects/components/ProjectsListContainer'
-import { DialogTitle } from '@/components/ui/dialog'
-import { PlusCircleIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import AddProjectForm from '@/features/dashboard/projects/components/AddProjectForm';
+import ProjectsListContainer from '@/features/dashboard/projects/components/ProjectsListContainer';
+import { DialogTitle } from '@/components/ui/dialog';
+import { PlusCircleIcon } from 'lucide-react';
 
 const page = () => {
   return (
@@ -28,7 +28,7 @@ const page = () => {
       </div>
       <ProjectsListContainer variant="horizontal" />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

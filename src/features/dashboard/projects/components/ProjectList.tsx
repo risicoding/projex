@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { ArrowRight, ExternalLink, MoreHorizontal } from 'lucide-react'
-import { Project } from '../types/project'
-import { cva } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { usePathname } from 'next/navigation'
-import { useMutationState, useQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { z } from 'zod'
-import { ProjectFormSchema } from '../ProjectSchema'
-import { GetProjectsAction } from '../actions/GetProjectsAction'
+import Link from 'next/link';
+import { ArrowRight, ExternalLink, MoreHorizontal } from 'lucide-react';
+import { Project } from '../types/project';
+import { cva } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { usePathname } from 'next/navigation';
+import { useMutationState, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { z } from 'zod';
+import { ProjectFormSchema } from '../ProjectSchema';
+import { GetProjectsAction } from '../actions/GetProjectsAction';
 
 // Variants for project list container
 const projectListVariants = cva('flex', {
@@ -20,7 +20,7 @@ const projectListVariants = cva('flex', {
       horizontal: 'flex-row flex-wrap gap-6  items-start justify-start',
     },
   },
-})
+});
 
 // Variants for the project link component
 const projectLinkVariants = cva(
@@ -38,24 +38,24 @@ const projectLinkVariants = cva(
       variant: 'vertical',
     },
   }
-)
+);
 
 // Icon button styles
 const iconButtonVariants =
-  'p-2 rounded-md text-gray-400 transition duration-300 hover:invert hover:scale-110'
+  'p-2 rounded-md text-gray-400 transition duration-300 hover:invert hover:scale-110';
 
 const ProjectList = ({
   variant,
   className,
 }: {
-  variant: 'horizontal' | 'vertical'
-  className?: string
+  variant: 'horizontal' | 'vertical';
+  className?: string;
 }) => {
   const { data } = useQuery<Project[]>({
     queryKey: ['projects'],
-  })
+  });
 
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   if (!data) {
     return (
@@ -74,32 +74,32 @@ const ProjectList = ({
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
   return (
     <div className={cn(projectListVariants({ variant, className }))}>
       {data?.map((project: Project, index) => {
-        let urlPath = ''
+        let urlPath = '';
         if (project.id) {
-          urlPath = `${pathname}/project/${project.id}`
+          urlPath = `${pathname}/project/${project.id}`;
         } else {
-          urlPath = pathname
+          urlPath = pathname;
         }
         return (
           <ProjectLink href={urlPath} key={index} variant={variant}>
             {project.name}
           </ProjectLink>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
 type ProjectLinkProps = {
-  children: React.ReactNode
-  href: string
-  variant?: 'horizontal' | 'vertical'
-}
+  children: React.ReactNode;
+  href: string;
+  variant?: 'horizontal' | 'vertical';
+};
 
 const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
   return (
@@ -125,7 +125,7 @@ const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
         <ArrowRight className="absolute bottom-2 right-2 w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       )}
     </Link>
-  )
-}
+  );
+};
 
-export default ProjectList
+export default ProjectList;

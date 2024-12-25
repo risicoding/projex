@@ -13,7 +13,7 @@
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache > /dev/null 2>&1",
     "prepare": "husky"
   },
   "dependencies": {
