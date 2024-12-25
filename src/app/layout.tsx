@@ -13,6 +13,10 @@ export default function RootLayout({
       <body className="antialiased h-screen dark">
         <Providers>
           <ClerkProvider
+            signInUrl='/login'
+            signUpUrl='/signup'
+            signInForceRedirectUrl='/select-organization'
+            signUpForceRedirectUrl='/select-organization'
             appearance={{
               baseTheme: dark,
             }}
