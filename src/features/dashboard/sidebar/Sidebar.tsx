@@ -10,14 +10,17 @@ import {
   DialogDescription,
   DialogHeader,
 } from '@/components/ui/dialog';
-import AddProjectForm from '../projects/components/AddProjectForm';
-import ProjectsListContainer from '../projects/components/ProjectsListContainer';
+import AddProjectForm from '../project/components/AddProjectForm';
+import ProjectsListContainer from '../project/components/ProjectsListContainer';
+import { auth } from '@clerk/nextjs/server';
 
 // Custom Link Component for Projects
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const { orgId } = await auth();
+
   return (
-    <aside className="w-full h-full bg-gray-900 text-gray-300 overflow-y-auto">
+    <aside className="w-full h-full  text-gray-300 overflow-y-auto">
       {/* Logo Section */}
       <div className="flex flex-row gap-3 p-3 items-center border-b border-gray-700">
         <Image className="select-none" src="/logo.svg" width={40} height={40} alt="logo" />
@@ -34,26 +37,26 @@ const Sidebar = () => {
       {/* Navigation Links */}
       <div className="flex flex-col px-3 gap-3 mt-2">
         <Link
-          href="/org"
+          href={`/org/${orgId}`}
           className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-700 hover:text-white transition"
         >
           <Home size={20} />
           <span>Home</span>
         </Link>
         <Link
-          href="/org"
+          href={`/org/${orgId}/manage`}
           className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-700 hover:text-white transition"
         >
           <Users size={20} />
-          <span>Users</span>
+          <span>Organization</span>
         </Link>
-        <Link
-          href="/org"
-          className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-700 hover:text-white transition"
-        >
-          <Settings size={20} />
-          <span>Settings</span>
-        </Link>
+        {/*   <Link */}
+        {/*     href="/org" */}
+        {/*     className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-700 hover:text-white transition" */}
+        {/*   > */}
+        {/*     <Settings size={20} /> */}
+        {/*     <span>Settings</span> */}
+        {/*   </Link> */}
       </div>
 
       {/* Projects Label */}

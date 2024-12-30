@@ -1,4 +1,5 @@
 'use client';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -12,46 +13,60 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DialogClose } from '@/components/ui/dialog';
-import { useParams } from 'next/navigation';
 import { AddBoardItemAction } from '../actions/AddBoardItemAction';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AddItemSchema, AddItemType } from '../schema/AddItemSchema';
-import { Item } from './Board';
+import { AddItemFormSchema, AddItemFormType } from '../schema/AddItemSchema';
+import { BoardItem } from '@prisma/client';
+import { PoundSterlingIcon } from 'lucide-react';
 
 const AddItemForm = ({ columnId }: { columnId: string }) => {
   const queryClient = useQueryClient();
-  const { projectId } = useParams<{ projectId: string }>();
+
+  const previousItems = queryClient.getQueryData(['itemQuery', columnId]) as BoardItem[];
+
+  let position = 0;
+  if (previousItems.length !== 0) {
+    position = previousItems[previousItems.length - 1].position + 1;
+  }
 
   const mutation = useMutation({
-    mutationKey: ['items', projectId],
-    mutationFn: (values: AddItemType) => AddBoardItemAction(values),
-    onMutate: async (newItem) => {
-      await queryClient.cancelQueries({ queryKey: ['board'] });
-      const previousItems = queryClient.getQueryData(['board', projectId]);
+    mutationKey: ['addItem', columnId],
+    mutationFn: (values: AddItemFormType) =>
+      AddBoardItemAction({
+        ...values,
+        position,
+      }),
 
-      queryClient.setQueryData(['board', projectId], (old: Item[]) => [...old, newItem]);
+    onMutate: async (newItem: AddItemFormType) => {
+      await queryClient.cancelQueries({ queryKey: ['itemQuery'] });
+
+      queryClient.setQueryData(['itemQuery', columnId], (old: BoardItem[]) => [
+        ...old,
+        { ...newItem, boardColumnId: columnId, position },
+      ]);
 
       return { previousItems };
     },
+
     onError: (err, newItem, context) => {
-      queryClient.setQueryData(['board', projectId], context?.previousItems);
+      queryClient.setQueryData(['itemQuery', columnId], context?.previousItems);
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['board', projectId] });
+      queryClient.invalidateQueries({ queryKey: ['itemQuery', columnId] });
     },
   });
 
-  const form = useForm<AddItemType>({
-    resolver: zodResolver(AddItemSchema),
+  const form = useForm<AddItemFormType>({
+    resolver: zodResolver(AddItemFormSchema),
     defaultValues: {
       name: '',
       columnId,
-      projectId: Number(projectId),
     },
   });
 
-  const onSubmit = async (values: AddItemType) => {
+  const onSubmit = async (values: AddItemFormType) => {
+    console.log(values);
     mutation.mutate(values);
   };
 
@@ -74,7 +89,6 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
         />
 
         {/* Hidden Fields */}
-        <input type="hidden" {...form.register('projectId')} />
         <input type="hidden" {...form.register('columnId')} />
 
         {/* Submit Button */}

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import AddProjectForm from '@/features/dashboard/projects/components/AddProjectForm';
-import ProjectsListContainer from '@/features/dashboard/projects/components/ProjectsListContainer';
+import AddProjectForm from '@/features/dashboard/project/components/AddProjectForm';
+import ProjectsListContainer from '@/features/dashboard/project/components/ProjectsListContainer';
 import { DialogTitle } from '@/components/ui/dialog';
 import { PlusCircleIcon } from 'lucide-react';
 

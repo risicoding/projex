@@ -1,114 +1,36 @@
 'use client';
-import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import { boardItem } from '@/db/schema';
-import { InferSelectModel } from 'drizzle-orm';
-import { updateItem } from '../actions/UpdateBoardItemAction';
-import AddItem from './AddItem';
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-import { GetBoardItemsAction } from '../actions/GetBoardItemsAction';
 
-export type Item = InferSelectModel<typeof boardItem>;
+import { useParams } from 'next/navigation';
+import { useBoardColumnQuery } from '../hooks/useBoardColumnQuery';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import BoardColumn from './BoardColumn';
+import { useUpdateBoardItem } from '../hooks/useBoardItemMutation';
 
 const Board = () => {
-  const queryClient = useQueryClient();
   const { projectId } = useParams<{ projectId: string }>();
+  const { data } = useBoardColumnQuery(projectId);
 
-  const { data: items } = useSuspenseQuery<Item[]>({
-    queryKey: ['board', projectId],
-    queryFn: async () => {
-      const res = await GetBoardItemsAction(Number(projectId));
-      return res as Item[];
-    },
-  });
+  const { updateItem } = useUpdateBoardItem();
 
-  const { mutate } = useMutation({
-    mutationKey: ['updateItem'],
-    mutationFn: async (data: { id: number; columnId: string }) => {
-      const res = await updateItem(data.id, data.columnId);
-      return res;
-    },
-    onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: ['board', projectId] });
+  const handleDragEnd = (e: DropResult) => {
+    const { destination, source, draggableId } = e;
 
-      const previousItems = queryClient.getQueryData(['board', projectId]);
-
-      queryClient.setQueryData(['board', projectId], (old: Item[]) => {
-        return old.map((item) => {
-          if (item.id === data.id) return { ...item, columnId: data.columnId };
-          return item;
-        });
-      });
-
-      return { previousItems };
-    },
-    onError: (err, data, context) => {
-      queryClient.setQueryData(['board', projectId], context?.previousItems);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['board', projectId] });
-    },
-  });
-
-  // Update task status in the database
-  const handleUpdate = async (id: number, columnId: string) => {
-    mutate({ id, columnId });
-  };
-
-  // Drag-and-drop logic
-  const onDragEnd = (result: DropResult) => {
-    const { destination, draggableId } = result;
     if (!destination) return;
+    console.log(e);
 
-    const newStatus = destination.droppableId;
-    handleUpdate(Number(draggableId), newStatus);
+    updateItem({
+      itemId: draggableId,
+      destBoardColumnId: destination.droppableId,
+      sourceBoardColumnId: source.droppableId,
+      position: destination.index,
+    });
   };
-
-  type TaskStatus = 'to-do' | 'in-progress' | 'done';
-
-  const groupedTasks: Record<TaskStatus, Item[]> = {
-    'to-do': items.filter((task) => task.columnId === 'to-do'),
-    'in-progress': items.filter((task) => task.columnId === 'in-progress'),
-    done: items.filter((task) => task.columnId === 'done'),
-  };
-
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 py-12 px-8 overflow-x-auto">
-        {['to-do', 'in-progress', 'done'].map((status) => (
-          <div
-            className="space-y-3 bg-gradient-to-b from-gray-800 to-gray-900 p-4 rounded-lg min-w-[250px] shadow-lg"
-            key={status}
-          >
-            <h3 className="text-white font-semibold text-lg">{status.replace('-', ' ')}</h3>
-            <div>
-              <Droppable droppableId={status}>
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef} className="min-h-4">
-                    {groupedTasks[status as TaskStatus].map((item: Item, index: number) => (
-                      <Draggable key={index} draggableId={String(item.id)} index={index}>
-                        {(provided) => (
-                          <div
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                            className="bg-gradient-to-r from-gray-700 to-gray-800 p-3 mb-2 rounded-md text-white"
-                            style={provided.draggableProps.style}
-                          >
-                            {item.name}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              <AddItem columnId={status} />
-            </div>
-          </div>
-        ))}
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="">
+        <div className="flex flex-row basis-16 space-x-4 overflow-x-scroll p-6 items-start">
+          {data?.map((column) => <BoardColumn key={column.id} id={column.id} name={column.name} />)}
+        </div>
       </div>
     </DragDropContext>
   );

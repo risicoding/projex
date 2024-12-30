@@ -1,31 +1,27 @@
 'use server';
-
-import { db } from '@/db/drizzle';
-import { boardItem } from '@/db/schema';
+import { db } from '@/lib/db';
 import { AddItemSchema, AddItemType } from '../schema/AddItemSchema';
-
-// Define Zod schema for validation
 
 export const AddBoardItemAction = async (values: AddItemType) => {
   const parsedValues = AddItemSchema.safeParse(values);
+  console.log(parsedValues);
 
   if (!parsedValues.success) {
     throw new Error('Invalid data', parsedValues.error);
   }
 
-  const { name, projectId, columnId } = parsedValues.data;
+  const { name, columnId, position } = parsedValues.data;
 
   try {
-    const res = await db
-      .insert(boardItem)
-      .values({
+    const res = await db.boardItem.create({
+      data: {
         name,
-        projectId,
-        columnId,
-      })
-      .returning();
+        boardColumnId: columnId,
+        position,
+      },
+    });
 
-    return { message: 'success', res: res[0] };
+    return { message: 'success', res };
   } catch (err) {
     console.error('Error inserting board item:', err);
     throw err;

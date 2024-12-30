@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ProjectFormSchema } from '../ProjectSchema';
+import { ProjectFormSchema } from '../schema/project';
 import {
   Form,
   FormField,
@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { AddProjectAction } from '../actions/AddProjectAction';
 import { DialogClose } from '@/components/ui/dialog';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Project } from '../types/project';
+import { Project } from '@prisma/client';
 
 const AddProjectForm = () => {
   const queryClient = useQueryClient();

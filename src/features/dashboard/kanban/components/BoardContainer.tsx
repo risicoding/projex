@@ -3,7 +3,7 @@ import { GetBoardItemsAction } from '../actions/GetBoardItemsAction';
 import Board from './Board';
 
 interface BoardContainerProps {
-  projectId: number;
+  projectId: string;
 }
 
 const BoardContainer = async ({ projectId }: BoardContainerProps) => {

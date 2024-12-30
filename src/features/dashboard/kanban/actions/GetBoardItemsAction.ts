@@ -1,15 +1,16 @@
 'use server';
-import { db } from '@/db/drizzle';
-import { boardItem } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { db } from '@/lib/db';
 
-export const GetBoardItemsAction = async (projectId: number) => {
+export const GetBoardItemsAction = async (boardColumnId: string) => {
   try {
-    const boardItems = await db.select().from(boardItem).where(eq(boardItem.projectId, projectId));
-    console.log(boardItems);
+    const boardItems = await db.boardItem.findMany({
+      where: {
+        boardColumnId,
+      },
+    });
+
     return boardItems;
   } catch (err) {
-    console.error(err);
     return { err: 'Something went wrong', message: err };
   }
 };

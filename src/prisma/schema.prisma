@@ -1,0 +1,37 @@
+model Project {
+  id        String        @id @default(cuid())
+  name      String
+  orgId     String
+  creatorId String
+  columns   BoardColumn[]
+}
+
+model BoardColumn {
+  id        String      @id @default(cuid())
+  name      String
+  slug      String
+  Project   Project     @relation(fields: [projectId], references: [id])
+  projectId String
+  items     BoardItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model BoardItem {
+  id            String      @id @default(cuid())
+  name          String
+  position      Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  BoardColumn   BoardColumn @relation(fields: [boardColumnId], references: [id])
+  boardColumnId String
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

@@ -2,22 +2,19 @@
 
 import Link from 'next/link';
 import { ArrowRight, ExternalLink, MoreHorizontal } from 'lucide-react';
-import { Project } from '../types/project';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { usePathname } from 'next/navigation';
-import { useMutationState, useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { z } from 'zod';
-import { ProjectFormSchema } from '../ProjectSchema';
-import { GetProjectsAction } from '../actions/GetProjectsAction';
+import { useParams, usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { Project } from '@prisma/client';
 
 // Variants for project list container
 const projectListVariants = cva('flex', {
   variants: {
     variant: {
       vertical: 'flex-col gap-3 items-start justify-start',
-      horizontal: 'flex-row flex-wrap gap-6  items-start justify-start',
+      horizontal: 'flex-row flex-wrap gap-6 items-center justify-start',
     },
   },
 });
@@ -29,9 +26,9 @@ const projectLinkVariants = cva(
     variants: {
       variant: {
         vertical:
-          ' items-center justify-start w-full px-4 py-3 text-sm items-start font-medium text-gray-300 hover:bg-gray-700 hover:text-white',
+          ' flex flex-row items-center justify-between w-full px-4 py-3 text-sm items-start font-medium text-gray-300 hover:bg-gray-700 hover:text-white',
         horizontal:
-          'items-center justify-end p-6  w-32 h-32 text-base  font-semibold text-gray-100 hover:from-gray-700 hover:via-gray-800 hover:to-gray-700 shadow-lg',
+          'items-center justify-center p-0  w-32 h-32 text-base  font-semibold text-gray-100 hover:from-gray-700 hover:via-gray-800 hover:to-gray-700 shadow-lg',
       },
     },
     defaultVariants: {
@@ -55,9 +52,10 @@ const ProjectList = ({
     queryKey: ['projects'],
   });
 
+  const { orgId } = useParams();
   const pathname = usePathname();
 
-  if (!data) {
+  if (data?.length === 0) {
     return (
       <div className="flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center shadow-md">
@@ -81,7 +79,7 @@ const ProjectList = ({
       {data?.map((project: Project, index) => {
         let urlPath = '';
         if (project.id) {
-          urlPath = `${pathname}/project/${project.id}`;
+          urlPath = `/org/${orgId}/project/${project.id}`;
         } else {
           urlPath = pathname;
         }
@@ -106,7 +104,7 @@ const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
     <Link href={href} className={cn(projectLinkVariants({ variant }))}>
       {/* Icons at the top - visible only in horizontal */}
       {variant === 'horizontal' && (
-        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="items-center gap-2 hidden group-hover:flex transitiony ease-in duration-700">
           <button className={iconButtonVariants}>
             <ExternalLink className="w-5 h-5" />
           </button>
@@ -118,11 +116,19 @@ const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
 
       {/* Text */}
 
-      <span className={variant === 'horizontal' ? 'mt-2' : ''}>{children}</span>
+      <span
+        className={
+          variant === 'horizontal'
+            ? 'flex group-hover:hidden transition ease-in duration-700 mt-2'
+            : ''
+        }
+      >
+        {children}
+      </span>
 
       {/* Arrow for vertical orientation */}
       {variant === 'vertical' && (
-        <ArrowRight className="absolute bottom-2 right-2 w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <ArrowRight className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       )}
     </Link>
   );
