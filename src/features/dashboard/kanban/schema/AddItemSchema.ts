@@ -10,6 +10,8 @@ export const AddItemFormSchema = z.object({
 export const AddItemSchema = z.object({
   name: z.string().nonempty('Name is required'),
   columnId: z.string(),
+  description: z.string().optional(),
+  date: z.date().optional(),
   position: z.number(),
 });
 

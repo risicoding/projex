@@ -10,7 +10,7 @@ export const AddBoardItemAction = async (values: AddItemType) => {
     throw new Error('Invalid data', parsedValues.error);
   }
 
-  const { name, columnId, position } = parsedValues.data;
+  const { name, columnId, position, date, description } = parsedValues.data;
 
   try {
     const res = await db.boardItem.create({
@@ -18,6 +18,8 @@ export const AddBoardItemAction = async (values: AddItemType) => {
         name,
         boardColumnId: columnId,
         position,
+        date,
+        description,
       },
     });
 
