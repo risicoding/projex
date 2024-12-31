@@ -1,9 +1,9 @@
 import React from 'react';
 import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/nextjs';
-import OrgSwitcher from '@/features/dashboard/org-switcher/OrgSwitcher';
+import OrgSwitcher from '@/features/dashboard/components/org-switcher/OrgSwitcher';
 import Sidebar from '@/features/dashboard/components/Sidebar';
 import MobileSidebar from '@/features/dashboard/components/MobileSidebar';
-import Navbar from '@/features/dashboard/org-switcher/DashboardNavbar';
+import Navbar from '@/features/dashboard/components/DashboardNavbar';
 
 const OrgLayout = ({ children }: { children: React.ReactNode }) => {
   return (

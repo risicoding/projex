@@ -20,9 +20,9 @@ const Sidebar = async () => {
   const { orgId } = await auth();
 
   return (
-    <aside className="w-full h-full  text-gray-300 overflow-y-auto">
+    <aside className="w-full h-full bg-black  text-gray-300 overflow-y-auto z-30">
       {/* Logo Section */}
-      <div className="flex flex-row gap-3 p-3 items-center border-b border-gray-700">
+      <div className="flex flex-row gap-3 p-3 items-center ">
         <Image className="select-none" src="/logo.svg" width={40} height={40} alt="logo" />
         <h2 className="text-xl font-semibold">Projex</h2>
       </div>

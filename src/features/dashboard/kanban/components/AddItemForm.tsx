@@ -17,7 +17,12 @@ import { AddBoardItemAction } from '../actions/AddBoardItemAction';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AddItemFormSchema, AddItemFormType } from '../schema/AddItemSchema';
 import { BoardItem } from '@prisma/client';
-import { PoundSterlingIcon } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { CalendarIcon } from 'lucide-react';
 
 const AddItemForm = ({ columnId }: { columnId: string }) => {
   const queryClient = useQueryClient();
@@ -62,6 +67,8 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
     defaultValues: {
       name: '',
       columnId,
+      description: '',
+      date: undefined,
     },
   });
 
@@ -72,7 +79,7 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
         {/* Name Field */}
         <FormField
           control={form.control}
@@ -82,6 +89,55 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="Enter item name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={'outline'}
+                      className={cn(
+                        'w-[240px] pl-3 text-left font-normal',
+                        !field.value && 'text-muted-foreground'
+                      )}
+                    >
+                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description (optional)</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

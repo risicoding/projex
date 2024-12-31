@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 export const AddItemFormSchema = z.object({
   name: z.string().nonempty('Name is required'),
+  description: z.string().optional(),
+  date: z.date().optional(),
   columnId: z.string(),
 });
 

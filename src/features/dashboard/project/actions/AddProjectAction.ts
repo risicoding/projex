@@ -5,11 +5,12 @@ import { auth } from '@clerk/nextjs/server';
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import { DEFAULT_KANBAN_COLUMNS } from '../constants';
+import logger from '@/lib/logger';
 
 export const AddProjectAction = async (values: z.infer<typeof ProjectFormSchema>) => {
-  console.log('values:', values);
   const parsedValues = ProjectFormSchema.safeParse(values);
-  console.log(parsedValues);
+
+  logger.info(`Posted project : ${JSON.stringify(parsedValues)}`);
 
   if (!parsedValues.success) {
     return {
