@@ -16,7 +16,8 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx src/prisma/seed.ts",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache > /dev/null 2>&1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
