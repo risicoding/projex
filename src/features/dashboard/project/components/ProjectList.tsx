@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useParams, usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Project } from '@prisma/client';
+import { GetProjectsAction } from '../actions/GetProjectsAction';
 
 // Variants for project list container
 const projectListVariants = cva('flex', {
@@ -48,8 +49,13 @@ const ProjectList = ({
   variant: 'horizontal' | 'vertical';
   className?: string;
 }) => {
-  const { data } = useQuery<Project[]>({
+
+  const { data } = useQuery({
     queryKey: ['projects'],
+    queryFn: async () => {
+      const res = await GetProjectsAction();
+      return res as Project[];
+    },
   });
 
   const { orgId } = useParams();
@@ -104,7 +110,7 @@ const ProjectLink = ({ children, href, variant }: ProjectLinkProps) => {
     <Link href={href} className={cn(projectLinkVariants({ variant }))}>
       {/* Icons at the top - visible only in horizontal */}
       {variant === 'horizontal' && (
-        <div className="items-center gap-2 hidden group-hover:flex transitiony ease-in duration-700">
+        <div className="items-center gap-2 hidden group-hover:flex transition ease-in duration-700">
           <button className={iconButtonVariants}>
             <ExternalLink className="w-5 h-5" />
           </button>

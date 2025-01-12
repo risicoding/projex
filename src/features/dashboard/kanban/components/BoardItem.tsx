@@ -1,4 +1,7 @@
+'use client'
+import { useOrganization } from '@clerk/nextjs';
 import { Draggable } from '@hello-pangea/dnd';
+import { useEffect } from 'react';
 
 interface BoardItemProps {
   id: string;

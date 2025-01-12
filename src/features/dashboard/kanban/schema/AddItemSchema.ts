@@ -4,6 +4,7 @@ export const AddItemFormSchema = z.object({
   name: z.string().nonempty('Name is required'),
   description: z.string().optional(),
   date: z.date().optional(),
+  users: z.array(z.string()),
   columnId: z.string(),
 });
 
@@ -12,6 +13,7 @@ export const AddItemSchema = z.object({
   columnId: z.string(),
   description: z.string().optional(),
   date: z.date().optional(),
+  users: z.array(z.string()),
   position: z.number(),
 });
 

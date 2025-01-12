@@ -23,6 +23,7 @@ model BoardItem {
   name          String
   description   String?
   date          DateTime?
+  users         String[]
   position      Int
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt

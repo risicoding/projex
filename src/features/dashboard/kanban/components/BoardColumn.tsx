@@ -16,7 +16,7 @@ const BoardColumn = ({ id, name }: BoardColumnProps) => {
     <Card className="flex flex-col shrink-0 transition ease-in-out duration-300 space-y-3 min-w-[200px] p-4  rounded-md shadow-inner bg-black ">
       <div className="flex items-center justify-center space-x-2">
         <h4 className="text-lg font-semibold text-gray-100">{name}</h4>
-        <span className="px-1 rounded-md text-sm font-bold bg-gray-900 text-gray-400">
+        <span className="px-1 rounded-md text-sm font-bold text-gray-400">
           {data?.length}
         </span>
       </div>

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import AddProjectForm from '@/features/dashboard/project/components/AddProjectForm';
 import ProjectsListContainer from '@/features/dashboard/project/components/ProjectsListContainer';
 import { DialogTitle } from '@/components/ui/dialog';
@@ -15,12 +15,13 @@ const page = () => {
 
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="flex flex-row text-white items-center justify-between hover:bg-black hover:text-blue-400 hover:ring-2 hover:ring-primary transition ease-in-out duration-200">
+            <Button className="flex flex-row text-white items-center justify-between hover:bg-black hover:text-primary ring-2 ring-primary transition ease-in-out duration-200">
               <span className="font-semibold">Create</span>
               <PlusCircleIcon />
             </Button>
           </DialogTrigger>
           <DialogContent className="w-3/5">
+            <DialogDescription className='hidden'>Add project dialog</DialogDescription>
             <DialogTitle className="hidden">Add a new project</DialogTitle>
             <AddProjectForm />
           </DialogContent>

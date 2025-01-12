@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { CalendarIcon } from 'lucide-react';
+import AssignUser from './AssignUser';
 
 const AddItemForm = ({ columnId }: { columnId: string }) => {
   const queryClient = useQueryClient();
@@ -69,6 +70,7 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
       columnId,
       description: '',
       date: undefined,
+      users: [],
     },
   });
 
@@ -125,6 +127,20 @@ const AddItemForm = ({ columnId }: { columnId: string }) => {
                   />
                 </PopoverContent>
               </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="users"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Members</FormLabel>
+              <FormControl>
+                <AssignUser value={field.value} onChange={field.onChange} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
